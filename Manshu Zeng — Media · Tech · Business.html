@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manshu Zeng — Media · Tech · Business</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #faf8f5;
+      --white: #ffffff;
+      --warm: #f4f0e8;
+      --warmer: #ede7d9;
+      --text: #1a1a1a;
+      --muted: #6b6460;
+      --light-muted: #9a928c;
+      --border: #e2dbd0;
+      --accent: #8b5e3c;
+      --accent-light: #f5ede4;
+      --accent-mid: #c4895f;
+      --teal: #2e6b65;
+      --teal-light: #e4f0ef;
+      --serif: 'Playfair Display', Georgia, serif;
+      --sans: 'Outfit', sans-serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; line-height: 1.6; overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 200; display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 5rem; background: rgba(250,248,245,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--serif); font-size: 1.2rem; color: var(--text); text-decoration: none; letter-spacing: 0.02em; }
+    .nav-logo span { color: var(--accent); font-style: italic; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    #hero { min-height: 100vh; background: var(--white); display: flex; align-items: center; padding: 0 5rem; position: relative; overflow: hidden; border-bottom: 1px solid var(--border); }
+    .hero-bg-shape { position: absolute; right: 0; top: 0; bottom: 0; width: 48%; background: var(--warm); clip-path: polygon(8% 0, 100% 0, 100% 100%, 0% 100%); }
+    .hero-bg-dots { position: absolute; right: 5rem; top: 50%; transform: translateY(-50%); width: 280px; height: 280px; background-image: radial-gradient(circle, var(--border) 1.5px, transparent 1.5px); background-size: 22px 22px; opacity: 0.6; pointer-events: none; }
+    .hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; display: grid; grid-template-columns: 1.1fr 1fr; gap: 5rem; align-items: center; position: relative; z-index: 1; }
+    .hero-left { animation: fadeUp 0.9s ease both; }
+    .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 1.6rem; }
+    .hero-eyebrow::before { content: ''; width: 30px; height: 1px; background: var(--accent); }
+    .hero-name { font-family: var(--serif); font-size: clamp(3rem, 5vw, 4.8rem); font-weight: 400; color: var(--text); line-height: 1.06; margin-bottom: 0.5rem; }
+    .hero-name em { font-style: italic; color: var(--accent); display: block; }
+    .hero-tagline { font-size: 0.88rem; color: var(--light-muted); letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; margin-bottom: 1.8rem; }
+    .hero-tagline span { color: var(--border); margin: 0 0.4rem; }
+    .hero-desc { color: var(--muted); font-size: 0.97rem; line-height: 1.85; max-width: 440px; margin-bottom: 2.4rem; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { background: var(--accent); color: var(--white); padding: 0.85rem 2rem; text-decoration: none; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; transition: background 0.2s, transform 0.2s; display: inline-block; }
+    .btn-primary:hover { background: #7a4f30; transform: translateY(-2px); }
+    .btn-outline { border: 1.5px solid var(--border); color: var(--muted); padding: 0.85rem 2rem; text-decoration: none; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; transition: border-color 0.2s, color 0.2s; display: inline-block; }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-right { animation: fadeUp 0.9s 0.18s ease both; }
+    .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 1.2rem; }
+    .hero-stat { background: var(--white); padding: 1.6rem 1.4rem; }
+    .stat-num { font-family: var(--serif); font-size: 2.4rem; font-weight: 600; color: var(--accent); line-height: 1; margin-bottom: 0.3rem; }
+    .stat-label { font-size: 0.72rem; color: var(--light-muted); letter-spacing: 0.05em; }
+    .hero-companies { background: var(--warm); border: 1px solid var(--border); padding: 1.2rem 1.5rem; }
+    .companies-label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--light-muted); margin-bottom: 0.7rem; }
+    .companies-row { display: flex; flex-wrap: wrap; gap: 0.8rem 1.4rem; align-items: center; }
+    .co-name { font-size: 0.78rem; font-weight: 600; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
+    section { padding: 7rem 5rem; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-eyebrow { display: inline-flex; align-items: center; gap: 0.7rem; font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 0.6rem; }
+    .section-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+    h2.section-title { font-family: var(--serif); font-size: clamp(2rem, 3.2vw, 2.7rem); font-weight: 400; line-height: 1.15; margin-bottom: 3.5rem; }
+    h2.section-title em { font-style: italic; color: var(--accent); }
+    #about { background: var(--bg); }
+    .about-grid { display: grid; grid-template-columns: 320px 1fr; gap: 5rem; align-items: start; }
+    .about-photo-wrap { position: relative; }
+    .about-photo-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 175px 115px 115px; gap: 5px; }
+    .photo-cell { background: var(--warmer); overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--light-muted); }
+    .photo-cell img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+    .photo-cell.tall { grid-row: span 2; }
+    .photo-cell.wide { grid-column: span 2; }
+    .photo-cell-label { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.3rem 0.5rem; background: rgba(0,0,0,0.2); font-size: 0.58rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
+    .about-skills { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1.4rem; }
+    .skill-chip { padding: 0.28rem 0.8rem; background: var(--white); border: 1px solid var(--border); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.03em; }
+    .about-text p { color: var(--muted); line-height: 1.9; margin-bottom: 1.1rem; font-size: 0.95rem; }
+    .about-text p strong { color: var(--text); font-weight: 600; }
+    .edu-card { margin-top: 2rem; padding: 1.4rem 1.6rem; background: var(--accent-light); border-left: 3px solid var(--accent); }
+    .edu-tag { font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); font-weight: 600; margin-bottom: 0.45rem; }
+    .edu-name { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; margin-bottom: 0.2rem; color: var(--text); }
+    .edu-detail { font-size: 0.8rem; color: var(--muted); }
+    #experience { background: var(--white); }
+    .exp-wrap { position: relative; padding-left: 2rem; }
+    .exp-wrap::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 0; width: 1px; background: var(--border); }
+    .exp-item { display: grid; grid-template-columns: 190px 1fr; gap: 2.5rem; padding-bottom: 3.2rem; position: relative; }
+    .exp-item:last-child { padding-bottom: 0; }
+    .exp-dot { position: absolute; left: -2rem; top: 5px; transform: translateX(-50%); width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--white); box-shadow: 0 0 0 3px var(--accent-light); }
+    .exp-period { font-size: 0.72rem; color: var(--accent); font-weight: 600; letter-spacing: 0.06em; margin-bottom: 0.25rem; }
+    .exp-location { font-size: 0.72rem; color: var(--light-muted); margin-bottom: 0.6rem; }
+    .exp-company { font-family: var(--serif); font-size: 1rem; font-weight: 600; color: var(--text); line-height: 1.3; margin-bottom: 0.5rem; }
+    .exp-badge { display: inline-block; padding: 0.2rem 0.7rem; background: var(--teal-light); color: var(--teal); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; }
+    .exp-role { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--light-muted); margin-bottom: 0.8rem; }
+    .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .exp-bullets li { font-size: 0.87rem; color: var(--muted); line-height: 1.75; padding-left: 1.1rem; position: relative; }
+    .exp-bullets li::before { content: '›'; position: absolute; left: 0; color: var(--accent-mid); font-weight: 700; }
+    .exp-bullets li strong { color: var(--text); font-weight: 600; }
+    #projects { background: var(--bg); }
+    .projects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .project-card { background: var(--white); border: 1px solid var(--border); overflow: hidden; transition: transform 0.25s, box-shadow 0.25s; }
+    .project-card:hover { transform: translateY(-5px); box-shadow: 0 14px 40px rgba(0,0,0,0.07); }
+    .project-card.featured { grid-column: span 2; }
+    .project-thumb { width: 100%; height: 180px; background: var(--warm); display: flex; align-items: center; justify-content: center; font-size: 3rem; position: relative; }
+    .project-card.featured .project-thumb { height: 210px; background: var(--accent-light); }
+    .project-type-tag { position: absolute; top: 1rem; left: 1rem; background: var(--white); border: 1px solid var(--border); font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; padding: 0.22rem 0.65rem; }
+    .project-info { padding: 1.5rem; }
+    .project-name { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; color: var(--text); margin-bottom: 0.5rem; }
+    .project-desc { font-size: 0.84rem; color: var(--muted); line-height: 1.7; }
+    .project-link { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1.1rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); text-decoration: none; font-weight: 600; transition: gap 0.2s; }
+    .project-link:hover { gap: 0.7rem; }
+    #arts { background: var(--white); }
+    .arts-mosaic { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 200px; gap: 8px; margin-bottom: 2.5rem; }
+    .arts-cell { background: var(--warmer); overflow: hidden; position: relative; display: flex; align-items: flex-end; transition: opacity 0.2s; cursor: pointer; }
+    .arts-cell:hover { opacity: 0.88; }
+    .arts-cell.tall { grid-row: span 2; }
+    .arts-cell.wide { grid-column: span 2; }
+    .arts-emoji { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 3.2rem; }
+    .arts-cell-label { position: relative; z-index: 2; width: 100%; padding: 0.7rem 0.9rem; background: linear-gradient(transparent, rgba(80,50,20,0.3)); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+    .hobbies-chips { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+    .hobby-chip { display: flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.1rem; background: var(--bg); border: 1px solid var(--border); font-size: 0.8rem; color: var(--text); font-weight: 400; transition: border-color 0.2s, background 0.2s; }
+    .hobby-chip:hover { border-color: var(--accent-mid); background: var(--accent-light); }
+    #contact { background: var(--warm); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+    .contact-intro p { color: var(--muted); line-height: 1.85; margin-bottom: 2rem; font-size: 0.95rem; }
+    .contact-links-list { display: flex; flex-direction: column; gap: 0.9rem; }
+    .c-link { display: flex; align-items: center; gap: 0.9rem; text-decoration: none; color: var(--text); font-size: 0.88rem; transition: color 0.2s; }
+    .c-link:hover { color: var(--accent); }
+    .c-icon { width: 2.2rem; height: 2.2rem; border: 1px solid var(--border); background: var(--white); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; flex-shrink: 0; transition: border-color 0.2s; }
+    .c-link:hover .c-icon { border-color: var(--accent); }
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .fgroup { display: flex; flex-direction: column; gap: 0.32rem; }
+    .fgroup label { font-size: 0.63rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--light-muted); font-weight: 600; }
+    .fgroup input, .fgroup textarea { background: var(--white); border: 1px solid var(--border); padding: 0.78rem 1rem; font-family: var(--sans); font-size: 0.88rem; color: var(--text); font-weight: 300; outline: none; transition: border-color 0.2s; resize: none; }
+    .fgroup input:focus, .fgroup textarea:focus { border-color: var(--accent); }
+    .fgroup input::placeholder, .fgroup textarea::placeholder { color: var(--light-muted); }
+    .btn-submit { background: var(--accent); color: var(--white); border: none; padding: 0.88rem 2.2rem; font-family: var(--sans); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; cursor: pointer; align-self: flex-start; transition: background 0.2s, transform 0.2s; }
+    .btn-submit:hover { background: #7a4f30; transform: translateY(-2px); }
+    footer { background: var(--warmer); border-top: 1px solid var(--border); padding: 1.8rem 5rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; color: var(--light-muted); }
+    footer a { color: var(--light-muted); text-decoration: none; transition: color 0.2s; }
+    footer a:hover { color: var(--accent); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: translateY(0); } }
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    @media (max-width: 960px) {
+      nav { padding: 1rem 1.5rem; }
+      section { padding: 5rem 1.5rem; }
+      #hero { padding: 0 1.5rem; }
+      .hero-inner, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+      .hero-right, .hero-bg-shape, .hero-bg-dots { display: none; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card.featured { grid-column: span 1; }
+      .arts-mosaic { grid-template-columns: 1fr 1fr; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="#hero" class="nav-logo">Manshu <span>Zeng</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#arts">Arts & Life</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="hero">
+  <div class="hero-bg-shape"></div>
+  <div class="hero-bg-dots"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Cornell MBA · Class of 2027</div>
+      <h1 class="hero-name">Manshu<br/><em>Zeng</em></h1>
+      <p class="hero-tagline">Media <span>·</span> Technology <span>·</span> Business</p>
+      <p class="hero-desc">Product & operations leader with 5+ years across tech, media, and AI startups. From TikTok's global growth to Cornell's MBA — I build things that move people and numbers.</p>
+      <div class="hero-btns">
+        <a href="#experience" class="btn-primary">View Experience</a>
+        <a href="#contact" class="btn-outline">Get In Touch</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="stat-num">5+</div><div class="stat-label">Years in Tech & Ops</div></div>
+        <div class="hero-stat"><div class="stat-num">15+</div><div class="stat-label">Countries Launched</div></div>
+        <div class="hero-stat"><div class="stat-num">31M</div><div class="stat-label">Campaign Views</div></div>
+        <div class="hero-stat"><div class="stat-num">4</div><div class="stat-label">Global Companies</div></div>
+      </div>
+      <div class="hero-companies">
+        <div class="companies-label">Previously at</div>
+        <div class="companies-row">
+          <span class="co-name">TikTok</span>
+          <span class="co-name">Trip.com</span>
+          <span class="co-name">Binance</span>
+          <span class="co-name">Tylo.AI</span>
+          <span class="co-name">Groupon</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-photo-wrap reveal">
+        <div class="about-photo-grid">
+          <div class="photo-cell tall">👤<div class="photo-cell-label">Portrait</div></div>
+          <div class="photo-cell">🏙<div class="photo-cell-label">City</div></div>
+          <div class="photo-cell">💃<div class="photo-cell-label">Dance</div></div>
+          <div class="photo-cell wide">🎓<div class="photo-cell-label">Cornell</div></div>
+        </div>
+        <div class="about-skills">
+          <span class="skill-chip">Product Management</span>
+          <span class="skill-chip">Operations</span>
+          <span class="skill-chip">Growth Strategy</span>
+          <span class="skill-chip">Data Analysis</span>
+          <span class="skill-chip">Storytelling</span>
+          <span class="skill-chip">Agile</span>
+          <span class="skill-chip">Cross-functional</span>
+        </div>
+      </div>
+      <div class="about-text reveal delay-1">
+        <p class="section-eyebrow">About Me</p>
+        <h2 class="section-title">Bridging <em>Stories</em><br/>& Strategy</h2>
+        <p>I started in <strong>media and journalism</strong> — learning how to tell stories that resonate. That foundation became my superpower when I moved into tech, helping products like TikTok and Trip.com grow not just in numbers, but in meaning.</p>
+        <p>Over 5+ years, I've led <strong>product management, operations, and growth</strong> across global companies in Shanghai and London — driving user growth in 15+ countries, launching campaigns reaching millions, and building internal platforms from scratch.</p>
+        <p>Now at <strong>Cornell's Johnson School of Business</strong>, I'm connecting the dots between media, technology, and strategy — preparing for the next chapter.</p>
+        <div class="edu-card">
+          <div class="edu-tag">Education</div>
+          <div class="edu-name">Cornell University — Johnson Graduate School of Management</div>
+          <div class="edu-detail">MBA · 2025–2027 · Ithaca, New York</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-inner">
+    <p class="section-eyebrow">Career</p>
+    <h2 class="section-title reveal">Professional <em>Experience</em></h2>
+    <div class="exp-wrap">
+      <div class="exp-item reveal">
+        <div class="exp-dot"></div>
+        <div class="exp-meta">
+          <div class="exp-period">2025</div>
+          <div class="exp-location">🇬🇧 London, UK</div>
+          <div class="exp-company">Groupon</div>
+          <span class="exp-badge">Pre-MBA Intern</span>
+        </div>
+        <div>
+          <div class="exp-role">Commercial Business & Sales Team</div>
+          <ul class="exp-bullets">
+            <li>Built <strong>GP dashboards and performance metrics</strong>, improving high-value deal close ratio by <strong>10%</strong></li>
+            <li>Generated <strong>60+ qualified leads</strong> through 100+ daily cold calls and field visits, securing 6 high-margin deals</li>
+            <li>Trained <strong>6 interns on Salesforce and Salesloft</strong>, cutting onboarding time by 50% and boosting lead generation by 15%</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-dot"></div>
+        <div class="exp-meta">
+          <div class="exp-period">2023–2024</div>
+          <div class="exp-location">🇬🇧 London, UK</div>
+          <div class="exp-company">Tylo.AI</div>
+          <span class="exp-badge">Product Manager</span>
+        </div>
+        <div>
+          <div class="exp-role">Early-Stage AI Startup · Conversational Scientific Search</div>
+          <ul class="exp-bullets">
+            <li>Owned <strong>product roadmap and PRDs</strong>, leading Agile sprints to boost user engagement <strong>20%+</strong></li>
+            <li>Managed multi-channel ad budgets across <strong>Google Ads, Facebook, LinkedIn, Reddit</strong>, achieving <strong>30%+ lift in campaign ROI</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-dot"></div>
+        <div class="exp-meta">
+          <div class="exp-period">2023</div>
+          <div class="exp-location">🇬🇧 London, UK</div>
+          <div class="exp-company">Binance – CoinMarketCap</div>
+          <span class="exp-badge">Operations Manager</span>
+        </div>
+        <div>
+          <div class="exp-role">Cryptocurrency Information Platform</div>
+          <ul class="exp-bullets">
+            <li>Directed growth initiatives projected to generate <strong>10K+ daily new users</strong>, accelerating delivery by <strong>20%</strong></li>
+            <li>Defined user personas and optimized customer flows, boosting retention by <strong>10% (users) and 30% (visitors)</strong></li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-dot"></div>
+        <div class="exp-meta">
+          <div class="exp-period">2021–2023</div>
+          <div class="exp-location">🇨🇳 Shanghai, China</div>
+          <div class="exp-company">ByteDance – TikTok</div>
+          <span class="exp-badge">Product & User Operations Manager</span>
+        </div>
+        <div>
+          <div class="exp-role">User Growth · SEA & MENA Markets</div>
+          <ul class="exp-bullets">
+            <li>Led referral programs across <strong>SEA & MENA</strong>, achieving <strong>20K+ daily new users</strong> in 4 priority countries</li>
+            <li>Rolled out features in <strong>15 countries</strong> via Agile and A/B testing — "Promotion Text Link" ranked <strong>top 3 by CTR</strong></li>
+            <li>Built <strong>3 internal platforms</strong> for risk, forecasting, and stakeholder collaboration with <strong>0 P1 incidents</strong></li>
+            <li>Launched TikTok's <strong>GTM campaign in Egypt</strong> — <strong>31M views, 80K followers, 200K likes</strong> in 3 months</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-item reveal">
+        <div class="exp-dot"></div>
+        <div class="exp-meta">
+          <div class="exp-period">2019–2021</div>
+          <div class="exp-location">🇨🇳 Shanghai, China</div>
+          <div class="exp-company">Trip.com Group</div>
+          <span class="exp-badge">Sr. Operations Manager</span>
+        </div>
+        <div>
+          <div class="exp-role">Operations · Cross-brand Partnerships · Lifecycle Growth</div>
+          <ul class="exp-bullets">
+            <li>Owned New Year campaign lifecycle, generating <strong>2.8M orders and $460K revenue in 1 month</strong></li>
+            <li>Led cross-brand programs with <strong>Tencent, DiDi, and Peugeot</strong></li>
+            <li>Improved <strong>15% repurchase rates</strong> via behavior forecasting and lifecycle communication systems</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-inner">
+    <p class="section-eyebrow">Work</p>
+    <h2 class="section-title reveal">Projects & <em>Artifacts</em></h2>
+    <div class="projects-grid">
+      <div class="project-card featured reveal">
+        <div class="project-thumb">📊<span class="project-type-tag">Featured · Claude Artifact</span></div>
+        <div class="project-info">
+          <h3 class="project-name">Auto Dashboard — Data Visualization Tool</h3>
+          <p class="project-desc">An interactive dashboard built with Claude, combining data visualization and performance metrics. Designed to make complex data accessible through clean charts and intuitive controls. Built using React and Recharts.</p>
+          <a href="#" class="project-link">View Project →</a>
+        </div>
+      </div>
+      <div class="project-card reveal delay-1">
+        <div class="project-thumb">🚀<span class="project-type-tag">Case Study</span></div>
+        <div class="project-info">
+          <h3 class="project-name">TikTok Egypt GTM Campaign</h3>
+          <p class="project-desc">Led TikTok's official go-to-market launch in Egypt — 31M views, 80K followers in 3 months.</p>
+          <a href="#" class="project-link">View Case →</a>
+        </div>
+      </div>
+      <div class="project-card reveal delay-2">
+        <div class="project-thumb">✨<span class="project-type-tag">Coming Soon</span></div>
+        <div class="project-info">
+          <h3 class="project-name">More Projects</h3>
+          <p class="project-desc">Additional projects and artifacts in progress. Check back soon.</p>
+          <a href="#contact" class="project-link">Get Notified →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="arts">
+  <div class="section-inner">
+    <p class="section-eyebrow" style="color:#7a5230;">Beyond Work</p>
+    <h2 class="section-title reveal">Arts & <em>Life</em></h2>
+    <div class="arts-mosaic reveal">
+      <div class="arts-cell tall"><div class="arts-emoji">💃</div><div class="arts-cell-label">Chinese Traditional Dance</div></div>
+      <div class="arts-cell"><div class="arts-emoji">🎨</div><div class="arts-cell-label">Drawing & Art</div></div>
+      <div class="arts-cell"><div class="arts-emoji">🎸</div><div class="arts-cell-label">Guitar</div></div>
+      <div class="arts-cell wide"><div class="arts-emoji">🏃</div><div class="arts-cell-label">Running & Outdoors</div></div>
+      <div class="arts-cell"><div class="arts-emoji">📖</div><div class="arts-cell-label">Reading</div></div>
+      <div class="arts-cell"><div class="arts-emoji">✈️</div><div class="arts-cell-label">Travel</div></div>
+    </div>
+    <div class="hobbies-chips reveal">
+      <div class="hobby-chip">💃 Chinese Traditional Dance</div>
+      <div class="hobby-chip">🎸 Guitar</div>
+      <div class="hobby-chip">🎨 Drawing</div>
+      <div class="hobby-chip">🏃 Jogging</div>
+      <div class="hobby-chip">✈️ Travel</div>
+      <div class="hobby-chip">📖 Reading</div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-eyebrow">Let's Talk</p>
+    <h2 class="section-title reveal">Get In <em>Touch</em></h2>
+    <div class="contact-grid reveal">
+      <div class="contact-intro">
+        <p>Open to new opportunities, collaborations, and conversations. Whether you're a recruiter, potential collaborator, or just want to connect — I'd love to hear from you.</p>
+        <div class="contact-links-list">
+          <a href="mailto:mz@cornell.edu" class="c-link"><div class="c-icon">✉</div>mz@cornell.edu</a>
+          <a href="https://linkedin.com/in/manshuzeng" target="_blank" class="c-link"><div class="c-icon">in</div>linkedin.com/in/manshuzeng</a>
+          <a href="https://github.com/manshuzeng" target="_blank" class="c-link"><div class="c-icon">⌨</div>github.com/manshuzeng</a>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="fgroup"><label>Name</label><input type="text" placeholder="Your name"/></div>
+          <div class="fgroup"><label>Email</label><input type="email" placeholder="your@email.com"/></div>
+        </div>
+        <div class="fgroup"><label>Subject</label><input type="text" placeholder="Opportunity · Collaboration · Hello"/></div>
+        <div class="fgroup"><label>Message</label><textarea rows="4" placeholder="What's on your mind?"></textarea></div>
+        <button type="submit" class="btn-submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Manshu Zeng</span>
+  <span>Media · Tech · Business</span>
+  <a href="#hero">Back to top ↑</a>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navLinks.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + current); });
+  });
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.btn-submit');
+    btn.textContent = 'Message Sent ✓';
+    btn.style.background = '#2e6b65';
+    setTimeout(() => { btn.textContent = 'Send Message'; btn.style.background = ''; e.target.reset(); }, 3000);
+  }
+</script>
+</body>
+</html>
